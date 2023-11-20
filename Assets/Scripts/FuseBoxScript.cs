@@ -7,32 +7,65 @@ using UnityEngine;
 
 public class FuseBoxScript : MonoBehaviour
 {
-    public string interactMessage1 = "Paina F irrottaaksesi sulakkeet.";
-    public string interactMessage2 = "Paina F laittaaksesi sulakkeet takaisin.";
-    public float interactDistance = 5f;
-    private bool isPlayerInRange = false;
+    public string interactMessage1 = "Paina F irrottaaksesi sulakkeet...";
+    public string interactMessage2 = "Paina F laittaaksesi sulakkeet takaisin...";
+    public bool charAtFuseBox = false;
+    public GameObject player;
+    public GameObject fuseBox;
+    public float interactionDistance = 2.5f;
 
+    void Start()
+    {
+        // change interactionDistance variable here
+        interactionDistance = 2.4f;
+
+        // start CharAtFuseBox()
+        StartCoroutine(CharAtFuseBox());
+    }
+
+
+    // this method works next: calculates distance using internal Unity command "Vector3.Distance"
+    // if character is enough close to the fuseBox and inside BlueHouse, then charAtFuseBox variable becomes true
+    IEnumerator CharAtFuseBox()
+    {
+
+        while (true) { 
+            float distance = Vector3.Distance(player.transform.position, fuseBox.transform.position);
+            if (distance <= interactionDistance && GlobalVariables.charAtBlueHouse)
+            {
+                charAtFuseBox = true;
+            }
+            else
+            {
+                charAtFuseBox = false;
+            }
+            yield return new WaitForSeconds(0.1f); // update variable only every 0.1 second
+        }
+    }
+
+
+    // when key F is pressed, reverse the electricity bool value
     void Update()
     {
-        if (isPlayerInRange && Input.GetKeyDown(KeyCode.F))
+        if (charAtFuseBox && Input.GetKeyDown(KeyCode.F))
         {
             if (GlobalVariables.electricity == true) 
             {
                 GlobalVariables.electricity = false;
-                Debug.Log("Sähkö on laitettu pois päältä!");
             } 
 
             else if (GlobalVariables.electricity == false) 
             { 
                 GlobalVariables.electricity = true;
-                Debug.Log("Sähkö on laitettu päälle!");
             }
         }
     }
 
+
+    // write a message using GUI.Label() method when character is nearby the fusebox depending if electricity is on or off
     void OnGUI()
     {
-        if (isPlayerInRange)
+        if (charAtFuseBox)
         {
             if (GlobalVariables.electricity == true)
             {
@@ -45,22 +78,6 @@ public class FuseBoxScript : MonoBehaviour
                 GUI.Label(new Rect(Screen.width / 2 - 50, Screen.height / 2 - 25, 200, 50), interactMessage2);
 
             }
-        }
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "PlayerArmature")
-        {
-            isPlayerInRange = true;
-        }
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == "PlayerArmature")
-        {
-            isPlayerInRange = false;
         }
     }
 }

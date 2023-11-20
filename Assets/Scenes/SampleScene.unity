@@ -1224,7 +1224,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactMessage1: Paina F irrottaaksesi sulakkeet.
   interactMessage2: Paina F laittaaksesi sulakkeet takaisin.
-  interactDistance: 5
+  charAtFuseBox: 0
+  player: {fileID: 599737746}
+  fuseBox: {fileID: 247362940}
+  interactionDistance: 2.4
 --- !u!4 &252008978 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 4be4f079cd4d6c14fbe4259f895d9bf0, type: 3}
@@ -2923,6 +2926,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 3189820541857840076, guid: ddae8703de8a63742af7ff389827b4eb, type: 3}
   m_PrefabInstance: {fileID: 578079765}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &599737746 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 974238578668270704, guid: c708a3b79cd542b42bbfedb17e213bc1, type: 3}
+  m_PrefabInstance: {fileID: 700869027}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &599901744 stripped
 Transform:
