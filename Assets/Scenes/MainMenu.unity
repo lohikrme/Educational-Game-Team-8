@@ -449,7 +449,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1903768233}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ButtonHandler, Assembly-CSharp
         m_MethodName: ShowHighscores
         m_Mode: 1
@@ -481,7 +481,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 129eec69530c2c341b9c7d51a1b5f5c2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4b1e4406c8666f04dace87d80cf0cef7, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -582,7 +582,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1903768233}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ButtonHandler, Assembly-CSharp
         m_MethodName: ShowMain
         m_Mode: 1
@@ -849,7 +849,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1903768233}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ButtonHandler, Assembly-CSharp
         m_MethodName: ShowCredits
         m_Mode: 1
@@ -881,7 +881,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: caf78cd39a202a94f89c9bee0cc429a6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e0434d711108d5144b8a42e4f91c6ebc, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1318,7 +1318,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1903768233}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ButtonHandler, Assembly-CSharp
         m_MethodName: ShowMain
         m_Mode: 1
@@ -1368,6 +1368,134 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 851072171}
   m_CullTransparentMesh: 1
+--- !u!1 &864960128
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 864960129}
+  - component: {fileID: 864960130}
+  m_Layer: 0
+  m_Name: BACKGROUNDMUSIC
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &864960129
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 864960128}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 738.8928, y: 255.71042, z: 0}
+  m_LocalScale: {x: 1.4848764, y: 1.4848764, z: 1.4848764}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1489587415}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &864960130
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 864960128}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 26d905817997e9645a7f87ee847e08d0, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &938260023
 GameObject:
   m_ObjectHideFlags: 0
@@ -1425,7 +1553,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7a9aeaf8ad007744187d10abe206902c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 53107ff460e5d534983cc4ed558d8849, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1592,7 +1720,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7a9aeaf8ad007744187d10abe206902c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 79b0dcb634e86334d96c597278f24d1a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1693,7 +1821,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1903768233}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ButtonHandler, Assembly-CSharp
         m_MethodName: StartGame
         m_Mode: 1
@@ -1725,7 +1853,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 89d3ed076c76a6f44bcd37c97b3d27a6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7f9561a7ab783084ca6cc222bcab2b67, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1935,7 +2063,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1903768233}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ButtonHandler, Assembly-CSharp
         m_MethodName: QuitGame
         m_Mode: 1
@@ -1967,7 +2095,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: df845048b11127c44ab4451588ec5c71, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 76b0deb5766fbae4c8f245c05cd2458e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2080,6 +2208,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 864960129}
   - {fileID: 1530210797}
   - {fileID: 167000073}
   - {fileID: 1396404542}
@@ -2281,7 +2410,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a36c730da5bb3324f8399637c80a5c07, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a4e381b7df9065544be9da9a559d5971, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2624,7 +2753,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 3b1ea0763374bfc45b05124474967a13, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 53107ff460e5d534983cc4ed558d8849, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2651,7 +2780,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1903768231}
-  - component: {fileID: 1903768233}
+  - component: {fileID: 1903768234}
   m_Layer: 0
   m_Name: Scripts
   m_TagString: Untagged
@@ -2674,7 +2803,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1489587415}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1903768233
+--- !u!114 &1903768234
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2683,12 +2812,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1903768230}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4fc1e223e7da644bbe8088920bae647, type: 3}
+  m_Script: {fileID: 11500000, guid: 1d4cbbb3dd109b844bd92f438aef59fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Main: {fileID: 1530210796}
   Highscores: {fileID: 167000072}
   Credits: {fileID: 1396404541}
+  PlayButton: {fileID: 1237043092}
+  HighscoresButton: {fileID: 318657890}
+  CreditsButton: {fileID: 483907250}
+  QuitButton: {fileID: 1469078045}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
