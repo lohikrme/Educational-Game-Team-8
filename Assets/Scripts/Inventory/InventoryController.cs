@@ -2,6 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
+using Unity.VisualScripting.ReorderableList;
+using UnityEditor.UI;
 using UnityEditorInternal.VersionControl;
 using UnityEngine;
 using UnityEngine.InputSystem.Interactions;
@@ -15,7 +18,9 @@ public class InventoryController : MonoBehaviour
 
     public ItemData SelectedItem;
 
-    public TMP_Text SelectedItemDescription;
+    public TMP_Text SelectedItemUiText;
+
+    public GameObject EquippedItemModel;
 
     private void Awake() 
     {
@@ -24,6 +29,9 @@ public class InventoryController : MonoBehaviour
 
     private void Start() {
         UnequipItem();
+
+        foreach (Transform child in EquippedItemModel.transform)
+            child.gameObject.SetActive(false);
     }
 
 
@@ -58,40 +66,42 @@ public class InventoryController : MonoBehaviour
     private void Update() {
         if(Input.GetKeyDown(KeyCode.Alpha1))
         {
-            try{
-                SelectedItem = inventory[0];
-                UnequipItem();
-                SelectedItemDescription.text = SelectedItem.description;
-                InventorySlots[0].transform.Find("SelectedIcon").GetComponent<Image>().enabled = true;
-            } catch (ArgumentOutOfRangeException){
-                SelectedItemDescription.text = "You dont have anything in inventory.";
-            }
-
+            EquipItem(0);
         }
 
         if(Input.GetKeyDown(KeyCode.Alpha2))
         {
-            try{
-                SelectedItem = inventory[1];
-                UnequipItem();
-                SelectedItemDescription.text = SelectedItem.description;
-                InventorySlots[1].transform.Find("SelectedIcon").GetComponent<Image>().enabled = true;
-            } catch (ArgumentOutOfRangeException){
-                SelectedItemDescription.text = "You only have 1 item in inventory";
-            }
+            EquipItem(1);
         }
 
         if(Input.GetKeyDown(KeyCode.Alpha3))
         {
-            try{
-                SelectedItem = inventory[2];
-                UnequipItem();
-                SelectedItemDescription.text = SelectedItem.description;
-                InventorySlots[2].transform.Find("SelectedIcon").GetComponent<Image>().enabled = true;
-            } catch (ArgumentOutOfRangeException){
-                SelectedItemDescription.text = "You only have 1 item in inventory";
-            }
+            EquipItem(2);
         }
+
+    }
+
+    private void EquipItem(int slot)
+    {
+        try{
+                SelectedItem = inventory[slot];
+                UnequipItem();
+                SelectedItemUiText.text = SelectedItem.description;
+                InventorySlots[slot].transform.Find("SelectedIcon").GetComponent<Image>().enabled = true;
+
+                foreach (Transform child in EquippedItemModel.transform)
+                    child.gameObject.SetActive(false);
+                
+                if (inventory[slot].id == 0) {
+                    EquippedItemModel.transform.GetChild(0).gameObject.SetActive(true);
+                } else if (inventory[slot].id == 1){
+                    EquippedItemModel.transform.GetChild(1).gameObject.SetActive(true);
+                }  
+                
+            } catch (ArgumentOutOfRangeException)
+            {
+              SelectedItemUiText.text = "You dont have anything in that slot.";
+            }
     }
 
     private void UnequipItem()
