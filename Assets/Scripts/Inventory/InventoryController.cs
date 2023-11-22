@@ -66,6 +66,7 @@ public class InventoryController : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Alpha1))
         {
             EquipItem(0);
+
         }
 
         if(Input.GetKeyDown(KeyCode.Alpha2))
@@ -88,7 +89,47 @@ public class InventoryController : MonoBehaviour
                 SelectedItemUiText.text = SelectedItem.description;
                 InventorySlots[slot].transform.Find("SelectedIcon").GetComponent<Image>().enabled = true;
                 EquippedItemModel.transform.GetChild(SelectedItem.id).gameObject.SetActive(true);
-            } catch (ArgumentOutOfRangeException)
+
+            // check which item is selected, and modify GlobalVariables accordingly
+            if (SelectedItem.itemName == "Fire extinguisher")
+            {
+                GlobalVariables.fireextinguisherOnHand = true;
+                GlobalVariables.fryingpanOnHand = false;
+                GlobalVariables.lidOnHand = false;
+                GlobalVariables.phoneOnHand = false;
+            }
+
+            else if (SelectedItem.itemName == "Frying pan")
+            {
+                GlobalVariables.fryingpanOnHand = true;
+                GlobalVariables.fireextinguisherOnHand = false;
+                GlobalVariables.lidOnHand = false;
+                GlobalVariables.phoneOnHand = false;
+            }
+
+            else if (SelectedItem.itemName == "Phone")
+            {
+                GlobalVariables.phoneOnHand = true;
+                GlobalVariables.fryingpanOnHand = false;
+                GlobalVariables.fireextinguisherOnHand = false;
+                GlobalVariables.lidOnHand = false;
+            }
+
+            else if (SelectedItem.itemName == "Lid")
+            {
+                GlobalVariables.lidOnHand = true;
+                GlobalVariables.phoneOnHand = false;
+                GlobalVariables.fryingpanOnHand = false;
+                GlobalVariables.fireextinguisherOnHand = false;
+            }
+
+            // Debug.Log("Lid on hand: " + GlobalVariables.lidOnHand);
+            // Debug.Log("Fireextinguisher on hand: " + GlobalVariables.fireextinguisherOnHand);
+            // Debug.Log("Fryingpan on hand: " + GlobalVariables.fryingpanOnHand);
+            // Debug.Log("Phone on hand: " + GlobalVariables.phoneOnHand);
+
+
+        } catch (ArgumentOutOfRangeException)
             {
               SelectedItemUiText.text = "You dont have anything in that slot.";
             }
@@ -102,6 +143,11 @@ public class InventoryController : MonoBehaviour
         }
         foreach (Transform child in EquippedItemModel.transform)
             child.gameObject.SetActive(false);
+
+        GlobalVariables.lidOnHand = false;
+        GlobalVariables.phoneOnHand = false;
+        GlobalVariables.fryingpanOnHand = false;
+        GlobalVariables.fireextinguisherOnHand = false;
     }
 }
 
