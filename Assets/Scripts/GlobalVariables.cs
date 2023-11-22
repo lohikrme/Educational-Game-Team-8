@@ -19,10 +19,15 @@ public class GlobalVariables : MonoBehaviour
     public static bool charAtA2 = false;
     public static bool charAtBlueHouse = false;
 
+    public static bool fireextinguisherOnHand = false; // InventoryController updates
+    public static bool lidOnHand = false; // InventoryController updates
+    public static bool phoneOnHand = false; // InventoryController updates
+    public static bool fryingpanOnHand = false; // InventoryController updates
+
 
     // BLUE HOUSE INFORMATION
 
-    public static bool electricity = true;
+    public static bool electricity = true; // FuseBoxScript updates
 
 
 }
