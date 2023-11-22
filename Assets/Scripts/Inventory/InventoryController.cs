@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEditorInternal.VersionControl;
 using UnityEngine;
+using UnityEngine.InputSystem.Interactions;
 using UnityEngine.UI;
 
 public class InventoryController : MonoBehaviour
@@ -14,11 +15,15 @@ public class InventoryController : MonoBehaviour
 
     public ItemData SelectedItem;
 
-    public string SelectedItemDescription;
+    public TMP_Text SelectedItemDescription;
 
     private void Awake() 
     {
         Instance = this;
+    }
+
+    private void Start() {
+        UnequipItem();
     }
 
 
@@ -55,8 +60,11 @@ public class InventoryController : MonoBehaviour
         {
             try{
                 SelectedItem = inventory[0];
+                UnequipItem();
+                SelectedItemDescription.text = SelectedItem.description;
+                InventorySlots[0].transform.Find("SelectedIcon").GetComponent<Image>().enabled = true;
             } catch (ArgumentOutOfRangeException){
-                SelectedItemDescription = "You dont have anything in inventory.";
+                SelectedItemDescription.text = "You dont have anything in inventory.";
             }
 
         }
@@ -65,8 +73,11 @@ public class InventoryController : MonoBehaviour
         {
             try{
                 SelectedItem = inventory[1];
+                UnequipItem();
+                SelectedItemDescription.text = SelectedItem.description;
+                InventorySlots[1].transform.Find("SelectedIcon").GetComponent<Image>().enabled = true;
             } catch (ArgumentOutOfRangeException){
-                SelectedItemDescription = "You only have 1 item in inventory";
+                SelectedItemDescription.text = "You only have 1 item in inventory";
             }
         }
 
@@ -74,9 +85,20 @@ public class InventoryController : MonoBehaviour
         {
             try{
                 SelectedItem = inventory[2];
+                UnequipItem();
+                SelectedItemDescription.text = SelectedItem.description;
+                InventorySlots[2].transform.Find("SelectedIcon").GetComponent<Image>().enabled = true;
             } catch (ArgumentOutOfRangeException){
-                SelectedItemDescription = "You only have 1 item in inventory";
+                SelectedItemDescription.text = "You only have 1 item in inventory";
             }
+        }
+    }
+
+    private void UnequipItem()
+    {
+        foreach(var slot in InventorySlots)
+        {
+            slot.transform.Find("SelectedIcon").GetComponent<Image>().enabled = false;
         }
     }
 }
