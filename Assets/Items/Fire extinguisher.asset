@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0948cf39be5d5d94aa38c1ba2d1e140f, type: 3}
   m_Name: Fire extinguisher
   m_EditorClassIdentifier: 
-  id: 1
+  id: 0
   itemName: Fire extinguisher
   icon: {fileID: 21300000, guid: 483312ffa23c6ff4dbeac14e16c3df5e, type: 3}
   description: For fires and stuff
