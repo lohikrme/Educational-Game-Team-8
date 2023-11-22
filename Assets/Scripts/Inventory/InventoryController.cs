@@ -30,8 +30,7 @@ public class InventoryController : MonoBehaviour
     private void Start() {
         UnequipItem();
 
-        foreach (Transform child in EquippedItemModel.transform)
-            child.gameObject.SetActive(false);
+        
     }
 
 
@@ -88,16 +87,7 @@ public class InventoryController : MonoBehaviour
                 UnequipItem();
                 SelectedItemUiText.text = SelectedItem.description;
                 InventorySlots[slot].transform.Find("SelectedIcon").GetComponent<Image>().enabled = true;
-
-                foreach (Transform child in EquippedItemModel.transform)
-                    child.gameObject.SetActive(false);
-                
-                if (inventory[slot].id == 0) {
-                    EquippedItemModel.transform.GetChild(0).gameObject.SetActive(true);
-                } else if (inventory[slot].id == 1){
-                    EquippedItemModel.transform.GetChild(1).gameObject.SetActive(true);
-                }  
-                
+                EquippedItemModel.transform.GetChild(SelectedItem.id).gameObject.SetActive(true);
             } catch (ArgumentOutOfRangeException)
             {
               SelectedItemUiText.text = "You dont have anything in that slot.";
@@ -110,6 +100,8 @@ public class InventoryController : MonoBehaviour
         {
             slot.transform.Find("SelectedIcon").GetComponent<Image>().enabled = false;
         }
+        foreach (Transform child in EquippedItemModel.transform)
+            child.gameObject.SetActive(false);
     }
 }
 
