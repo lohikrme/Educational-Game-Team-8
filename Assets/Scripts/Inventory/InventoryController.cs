@@ -1,13 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
-using Unity.VisualScripting.ReorderableList;
-using UnityEditor.UI;
-using UnityEditorInternal.VersionControl;
 using UnityEngine;
-using UnityEngine.InputSystem.Interactions;
 using UnityEngine.UI;
 
 public class InventoryController : MonoBehaviour
