@@ -1,44 +1,52 @@
+// this script locates mainscene - bluehouse - tvtable
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ElectricityFireScript : MonoBehaviour
 {
-    public float interactionDistance = 3.5f;
-    public bool charAtElectricityFire = false;
+    public float interactionDistance = 4f;
+    public bool charAtTV;
     public GameObject player;
+    public GameObject tvTable;
+    public GameObject electricFire;
     public string interactMessage = "Paina F laukaistaksesi vesitäytteisen sammuttimen";
-    public static event System.Action<bool> OnFireStateChanged;
-    public static event System.Action<bool> OnEndTextStateChanged;
 
     // Start is called before the first frame update
     void Start()
     {
+        interactionDistance = 4f;
+        charAtTV = false;
+        interactMessage = "Paina F laukaistaksesi vesitäytteisen sammuttimen";
+
         // start coroutine
-        StartCoroutine(CharAtElectricityFire());
+        StartCoroutine(CheckIfCharAtTV());
 
     }
 
-    IEnumerator CharAtElectricityFire()
+    IEnumerator CheckIfCharAtTV()
     {
         while (true)
         {
-            float distance = Vector3.Distance(player.transform.position, transform.position);
+            float distance = Vector3.Distance(player.transform.position, tvTable.transform.position);
             if (distance <= interactionDistance && GlobalVariables.charAtBlueHouse)
             {
-                charAtElectricityFire = true;
+                charAtTV = true;
             }
             else
             {
-                charAtElectricityFire = false;
+                charAtTV = false;
             }
             yield return new WaitForSeconds(0.1f); // update variable only every 0.1 second
         }
     }
-    // here we bring the message to player, if lid is chosen from inventory
+
+
+    // here we bring the message to player, if fire extinguisher is chosen from the inventory
     void OnGUI()
     {
-        if (charAtElectricityFire && GlobalVariables.fireextinguisherOnHand)
+        if (charAtTV && GlobalVariables.fireextinguisherOnHand)
         {
             GUI.Label(new Rect(Screen.width / 2 - 50, Screen.height / 2 - 25, 200, 50), interactMessage);
         }
@@ -47,27 +55,33 @@ public class ElectricityFireScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Check if "F" key is pressed
-        if (charAtElectricityFire && Input.GetKeyDown(KeyCode.F) && GlobalVariables.fireextinguisherOnHand && GlobalVariables.electricity == false)
+        // CHECK IF PLAYER SPRAYS WATER ON TV AFTER ELE IS OFF - FIRE WILL EXTINGUISH
+        if (charAtTV && Input.GetKeyDown(KeyCode.F) && GlobalVariables.fireextinguisherOnHand && GlobalVariables.electricity == false)
         {
-            // Toggle the Electricity fire on/off
-            ToggleFire(!gameObject.activeSelf);
+            MakeElectricFireInvisible();
+            GlobalVariables.electricFireIsOn = false;
+            Debug.Log("Putting out fire with water extinguisher");
+            // possibly summon some kind of waterspray animation?
 
         }
-        else if (charAtElectricityFire && Input.GetKeyDown(KeyCode.F) && GlobalVariables.fireextinguisherOnHand && GlobalVariables.electricity == true)
+
+        // CHECK IF PLAYER SPRAYS WATER WHILE ELE STILL ON - FIRE EXPLOSION, GAME LOST
+        else if (charAtTV && Input.GetKeyDown(KeyCode.F) && GlobalVariables.fireextinguisherOnHand && GlobalVariables.electricity == true)
         {
-            //if electric is on, kill player and end game
-            // Set the object active/inactive
-            gameObject.SetActive(false);
-            // Send happening, let listeners know about change
-            OnEndTextStateChanged?.Invoke(false);
+            // summon electricFireExplosion
+            GlobalVariables.charIsDead = true;
+            Debug.Log("Causing electric fire explosion");
         }
     }
-    public void ToggleFire(bool turnOn)
+    void MakeElectricFireInvisible()
     {
-        // Set the object active/inactive
-        gameObject.SetActive(turnOn);
-        // Send happening, send state to listeners
-        OnFireStateChanged?.Invoke(turnOn);
+        foreach (Transform child in electricFire.transform)
+        {
+            Renderer renderer = child.GetComponent<Renderer>();
+            if (renderer != null)
+            {
+                renderer.enabled = false;
+            }
+        }
     }
 }

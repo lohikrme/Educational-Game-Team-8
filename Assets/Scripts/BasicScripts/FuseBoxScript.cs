@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class FuseBoxScript : MonoBehaviour
 {
-    public string interactMessage1 = "Paina F irrottaaksesi sulakkeet...";
-    public string interactMessage2 = "Paina F laittaaksesi sulakkeet takaisin...";
+    public string interactMessage1;
+    public string interactMessage2;
     public bool charAtFuseBox = false;
     public GameObject player;
     public GameObject fuseBox;
-    public float interactionDistance = 2.5f;
+    public float interactionDistance = 2.4f;
 
+
+    // use start to make messages etc settings are independant of unity editor settings.
     void Start()
     {
+        interactMessage1 = "Paina F irrottaaksesi sulakkeet...";
+        interactMessage2 = "Paina F laittaaksesi sulakkeet takaisin...";
+
         // change interactionDistance variable here
         interactionDistance = 2.4f;
 
@@ -46,11 +51,13 @@ public class FuseBoxScript : MonoBehaviour
     {
         if (charAtFuseBox && Input.GetKeyDown(KeyCode.F))
         {
+            // turn electricity OFF
             if (GlobalVariables.electricity == true) 
             {
                 GlobalVariables.electricity = false;
             } 
 
+            // turn electricity ON
             else if (GlobalVariables.electricity == false) 
             { 
                 GlobalVariables.electricity = true;

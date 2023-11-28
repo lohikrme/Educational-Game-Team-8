@@ -1,108 +1,139 @@
+// this script locates at mainscene - bluehouse - stove
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
-using System.Linq;
+using UnityEngine.Animations;
+using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 public class OilFireScript : MonoBehaviour
 {
-    public float interactionDistance = 3.5f;
-    public bool charAtOilFire = false;
+    
+    public bool charAtStove;
     public GameObject player;
-    public string interactMessage = "Paina F asettaaksesi kannen";
-    public static event System.Action<bool> OnFireStateChanged;
-    //public static event Action OnLidLowered;
-    //private string characterState = "UnEquip Item";
+    public GameObject Stove;
+    public GameObject lidOfFirePan;
+    public GameObject oilFire;
+    public float interactionDistance;
+    public string interactMessage1;
+    public string interactMessage2;
+    public string interactMessage3;
 
+
+    // Start is called before the first frame update
+    // use start to make sure messages etc are what is needed instead of dependant on unity editor settings...
     void Start()
     {
-        // Start CharAtOilFire coroutine
-        StartCoroutine(CharAtOilFire());
-      // Listening to the lid event
-        //KettleLid.OnLidLowered += HandleLidLowered;
+        interactMessage1 = "Paina F asettaaksesi kansi!";
+        interactMessage2 = "Paina F suihkuttaaksesi vettä!";
+        interactMessage3 = "Tuli on sammutettu!";
+
+        charAtStove = false;
+        interactionDistance = 2.4f;
+        makeLidInvisible(); // make lid invisible at the start of game
+
+        // start CharAtStove()
+        StartCoroutine(CharAtStove());
+
     }
 
-    // This will check if char is close to the oil fire and brings the functionality in
-    IEnumerator CharAtOilFire()
+    //this will check if char is close to the stove, and brings the functionality in
+    IEnumerator CharAtStove()
     {
         while (true)
         {
-            float distance = Vector3.Distance(player.transform.position, transform.position);
+            float distance = Vector3.Distance(player.transform.position, Stove.transform.position);
             if (distance <= interactionDistance && GlobalVariables.charAtBlueHouse)
             {
-                charAtOilFire = true;
+                charAtStove = true;
             }
             else
             {
-                charAtOilFire = false;
+                charAtStove = false;
             }
             yield return new WaitForSeconds(0.1f); // update variable only every 0.1 second
         }
     }
 
-// here we bring the message to player, if lid is chosen from inventory
-    void OnGUI()
+    // Update is called once per frame
+    void Update()
     {
-        if (charAtOilFire && GlobalVariables.lidOnHand)
+        // CHECK IF PLAYER USES LID SUCCESFULLY TO EXTINGUISH THE FIRE
+        if (charAtStove && GlobalVariables.lidOnHand && Input.GetKeyDown(KeyCode.F))
         {
-            GUI.Label(new Rect(Screen.width / 2 - 50, Screen.height / 2 - 25, 200, 50), interactMessage);
+            MakeLidVisible(); // make the lidOfFirePan visible when press F
+            MakeOilFireInvisible();
+            GlobalVariables.oilFireIsOn = false;
+            Debug.Log("Putting out fire with the lid!");
+        }
+
+        // CHECK IF PLAYER DOESNT REALIZE OIL EXPLODES FROM WATER AND DIED FROM THE EXPLOSION - GAME LOST
+        else if (charAtStove && GlobalVariables.fireextinguisherOnHand && Input.GetKeyDown(KeyCode.F))
+        {
+            // KUTSU ÖLJYPALORÄJÄHDYS - GAME OVER LOST
+            GlobalVariables.charIsDead = true;
+            Debug.Log("Causing oil fire explosion!");
         }
     }
 
 
-    void Update()
+    
+
+
+    void OnGUI()
     {
-        // Check if "F" key is pressed
-        if (charAtOilFire && Input.GetKeyDown(KeyCode.F) && GlobalVariables.lidOnHand)
+        if (charAtStove)
         {
-            // Toggle the oil fire on/off
-            ToggleFire(!gameObject.activeSelf);
-         }
+            if (GlobalVariables.lidOnHand && GlobalVariables.electricFireIsOn)
+            {
+                // guide to turn off the fire with the lid
+                GUI.Label(new Rect(Screen.width / 2 - 50, Screen.height / 2 - 25, 200, 50), interactMessage1);
+            }
+            else if (GlobalVariables.fireextinguisherOnHand && GlobalVariables.electricFireIsOn)
+            {
+                // guide to spray water with the extinguisher
+                GUI.Label(new Rect(Screen.width / 2 - 50, Screen.height / 2 - 25, 200, 50), interactMessage2);
+            }
+            else if (!GlobalVariables.electricFireIsOn)
+            {
+                // tell that the fire has been extinguished!
+                GUI.Label(new Rect(Screen.width / 2 - 50, Screen.height / 2 - 25, 200, 50), interactMessage3);
+            }
+        }
     }
 
-    public void ToggleFire(bool turnOn)
+
+    // this script makes te lid invisible at the start of game
+    void makeLidInvisible()
     {
-        // Set the object active/inactive
-        gameObject.SetActive(turnOn);
-        // Send happening, send state to listeners
-        OnFireStateChanged?.Invoke(turnOn);
-        // Olettaen, että sinulla on viittaus InventoryController-instanssiin
-        //InventoryController inventoryController = GetComponent<InventoryController>(); // Tämä voi olla erilainen riippuen siitä, miten olet saanut viittauksen InventoryControlleriin
-
-        //// Tarkista, onko viittaus olemassa
-        //if (inventoryController != null)
-        //{
-        //    // Etsi "Lid" inventaariosta
-        //    ItemData lidItem = inventoryController.inventory.FirstOrDefault(item => item.itemName == "Lid");
-
-        //    // Tarkista, löydettiinkö "Lid"
-        //    if (lidItem != null)
-        //    {
-        //        // Poista "Lid" inventaariosta
-        //        inventoryController.Remove(lidItem);
-        //    }
-        //}
-
+        Renderer renderer = lidOfFirePan.GetComponent<Renderer>();
+        if (renderer != null)
+        {
+            renderer.enabled = false;
+        }
     }
 
-    //    void HandleLidLowered()
-    //    {
-    //        // Palaa "UnEquip Item" -tilaan kun kattilan kansi lasketaan
-    //        characterState = "UnEquip Item";
-    //        Debug.Log("Character state: " + characterState);
-    //    }
-    //}
-    //public class KettleLid : MonoBehaviour
-    //{
-    //    // Määritellään tapahtuma, joka ilmoittaa kattilan kannen laskemisesta
-    //    public static event Action OnLidLowered;
 
-    //    // Täällä tapahtuu kattilan kannen laskeminen
-    //    public void LowerLid()
-    //    {
-    //        //Lasketaan kansi
+    // this script makes lid visible when character press f and is able to turn off fire
+    void MakeLidVisible()
+    {
+        Renderer renderer = lidOfFirePan.GetComponent<Renderer>();
+        if (renderer != null)
+        {
+            renderer.enabled = true;
+        }
+    }
 
-    //        // Lähetetään tapahtuma ilmoittamaan kattilan kannen laskemisesta
-    //        OnLidLowered?.Invoke();
-    //    }
+    // use this to render flames invisible when fire is turned off
+    void MakeOilFireInvisible()
+    {
+        foreach (Transform child in oilFire.transform)
+        {
+            Renderer renderer = child.GetComponent<Renderer>();
+            if (renderer != null)
+            {
+                renderer.enabled = false;
+            }
+        }
+    }
 }
