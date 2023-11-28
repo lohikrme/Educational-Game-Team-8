@@ -19,6 +19,11 @@ public class GlobalVariables : MonoBehaviour
     public static bool charAtA2 = false;
     public static bool charAtBlueHouse = false;
 
+    public static bool charIsDead = false;
+
+
+    // ITEM INFORMATION
+
     public static bool fireextinguisherOnHand = false; // InventoryController updates
     public static bool lidOnHand = false; // InventoryController updates
     public static bool phoneOnHand = false; // InventoryController updates
@@ -28,6 +33,11 @@ public class GlobalVariables : MonoBehaviour
     // BLUE HOUSE INFORMATION
 
     public static bool electricity = true; // FuseBoxScript updates
+
+
+    // FIRE INFORMATION
+    public static bool oilFireIsOn = true; // OilFireScript updates
+    public static bool electricFireIsOn = true; // ?? possibly wont be used in final version
 
 
 }
