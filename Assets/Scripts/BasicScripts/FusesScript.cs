@@ -12,6 +12,10 @@ public class FusesScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        // no need to make fuses visible at the start of game - they are automatically depending on if GlobalVariables.electricity is on or off
+
+
         // make fuses visible or invisible depending on if electricity is on
         StartCoroutine(HandleElectricStateChanged()); 
     }
