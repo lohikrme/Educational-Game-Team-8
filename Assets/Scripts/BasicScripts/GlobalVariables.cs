@@ -13,7 +13,7 @@ public class GlobalVariables : MonoBehaviour
     // CHARACTER INFORMATION
 
     public static int maxHitpoints = 100;
-    public static int hitpoints;
+    public static int currentHealth;
 
     public static bool charAtA1 = false;
     public static bool charAtA2 = false;

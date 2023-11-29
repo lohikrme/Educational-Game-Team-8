@@ -1,10 +1,7 @@
 // this script locates at mainscene - bluehouse - stove
 
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Animations;
-using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 public class OilFireScript : MonoBehaviour
 {
@@ -30,10 +27,10 @@ public class OilFireScript : MonoBehaviour
 
         charAtStove = false;
         interactionDistance = 2.4f;
-        makeLidInvisible(); // make lid invisible at the start of game
 
-        // start CharAtStove()
+        // start CharAtStove() and handleoilfirestatechange methods
         StartCoroutine(CharAtStove());
+        StartCoroutine(HandleOilFireStateChange());
 
     }
 
@@ -55,15 +52,15 @@ public class OilFireScript : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
+    // Update method affects only oilFireIsOn and GlobalVariables.currentHealth,
+    // while visiblity of fire and lid is handled in HandleOilFireStateChange method
     void Update()
     {
         // CHECK IF PLAYER USES LID SUCCESFULLY TO EXTINGUISH THE FIRE
         if (charAtStove && GlobalVariables.lidOnHand && Input.GetKeyDown(KeyCode.F))
         {
-            MakeLidVisible(); // make the lidOfFirePan visible when press F
-            MakeOilFireInvisible();
             GlobalVariables.oilFireIsOn = false;
+            MakeOilFireInvisible(); // use this here, because time freeze so fast otherwise method has no time to react
             Debug.Log("Putting out fire with the lid!");
         }
 
@@ -71,34 +68,49 @@ public class OilFireScript : MonoBehaviour
         else if (charAtStove && GlobalVariables.fireextinguisherOnHand && Input.GetKeyDown(KeyCode.F))
         {
             // KUTSU ÖLJYPALORÄJÄHDYS - GAME OVER LOST
-            GlobalVariables.charIsDead = true;
+            GlobalVariables.currentHealth = 0;
             Debug.Log("Causing oil fire explosion!");
         }
     }
-
-
-    
-
 
     void OnGUI()
     {
         if (charAtStove)
         {
-            if (GlobalVariables.lidOnHand && GlobalVariables.electricFireIsOn)
+            if (GlobalVariables.lidOnHand && GlobalVariables.oilFireIsOn)
             {
                 // guide to turn off the fire with the lid
                 GUI.Label(new Rect(Screen.width / 2 - 50, Screen.height / 2 - 25, 200, 50), interactMessage1);
             }
-            else if (GlobalVariables.fireextinguisherOnHand && GlobalVariables.electricFireIsOn)
+            else if (GlobalVariables.fireextinguisherOnHand && GlobalVariables.oilFireIsOn)
             {
                 // guide to spray water with the extinguisher
                 GUI.Label(new Rect(Screen.width / 2 - 50, Screen.height / 2 - 25, 200, 50), interactMessage2);
             }
-            else if (!GlobalVariables.electricFireIsOn)
+            else if (!GlobalVariables.oilFireIsOn)
             {
                 // tell that the fire has been extinguished!
                 GUI.Label(new Rect(Screen.width / 2 - 50, Screen.height / 2 - 25, 200, 50), interactMessage3);
             }
+        }
+    }
+
+    // when fire is on, fire must be visible and lid invisible, and the opposite:
+    IEnumerator HandleOilFireStateChange()
+    {
+        while (true)
+        {
+            if (GlobalVariables.oilFireIsOn)
+            {
+                makeLidInvisible();
+                MakeOilFireVisible(); 
+            }
+            else
+            {
+                MakeLidVisible();
+                MakeOilFireInvisible();
+            }
+            yield return new WaitForSeconds(0.1f);
         }
     }
 
@@ -136,4 +148,17 @@ public class OilFireScript : MonoBehaviour
             }
         }
     }
+
+    void MakeOilFireVisible()
+    {
+        foreach (Transform child in oilFire.transform)
+        {
+            Renderer renderer = child.GetComponent<Renderer>();
+            if (renderer != null)
+            {
+                renderer.enabled = true;
+            }
+        }
+    }
+
 }
